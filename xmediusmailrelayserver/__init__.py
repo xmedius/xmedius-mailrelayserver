@@ -1,2 +1,2 @@
-from xmediusrelayserver import *
+from xmediusmailrelayserver import *
 
