@@ -1,0 +1,12 @@
+Hostname: 0.0.0.0
+Port: 25
+DefaultRelayServer: your-organization-smtp-server.your-domain.com
+FromAddress: no-reply@your-domain.com
+Debug: 0
+
+MailRetryInterval: 600
+MailRetryTimeout: 43200
+
+Patterns:
+  "[0-9]+": [ "xmedius-smtpgateway.your-domain.com" ]
+  ".*": [ "your-organization-smtp-server.your-domain.com" ]
