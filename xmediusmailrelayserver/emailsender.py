@@ -16,16 +16,24 @@ class EmailSender:
         log.info("Sending to " + str(len(recipients)) + " recipients using server '" + server + "'")
         try:
             self._smtp.connect(server)
-            refused = self._smtp.send_message(message, to_addrs=recipients)
-            if refused:
-                log.info("Recipients refused: " + str(refused))
-
-            return refused
-
-        except (OSError, smtplib.SMTPException) as e:
-            log.info("Error sending to server")
+        except Exception as e:
+            log.error("Error connecting to server")
             log.exception(e)
             return recipients
+
+        try:
+            refused = self._smtp.send_message(message, to_addrs=recipients)
+        except (OSError, smtplib.SMTPException) as e:
+            log.error("Error sending to server")
+            log.exception(e)
+            return recipients
+        finally:
+            self._smtp.quit()
+
+        if refused:
+            log.info("Recipients refused: " + str(refused))
+
+        return refused
 
     def send_ndr(self, failed_message):
         m = message.Message()
@@ -61,8 +69,20 @@ class EmailSender:
         m.attach(p2)
 
         log.info("Sending NDR using server " + self._default_server)
-        s = smtplib.SMTP()
-        s.connect(self._default_server)
-        s.send_message(m, to_addrs=failed_message.get('X-MailFrom'), from_addr=self._from_address)
+
+        try:
+            self._smtp.connect(self._default_server)
+        except Exception as e:
+            log.error("Error connecting to server")
+            log.exception(e)
+            return
+
+        try:
+            self._smtp.send_message(m, to_addrs=failed_message.get('X-MailFrom'), from_addr=self._from_address)
+        except (OSError, smtplib.SMTPException) as e:
+            log.error("Error sending to server")
+            log.exception(e)
+        finally:
+            self._smtp.quit()
 
 
