@@ -22,7 +22,7 @@ class EmailSender:
             return recipients
 
         try:
-            refused = self._smtp.send_message(message, from_addr=self._from_address, to_addrs=recipients)
+            refused = self._smtp.send_message(message, from_addr=message.get('X-MailFrom'), to_addrs=recipients)
         except (OSError, smtplib.SMTPException) as e:
             log.error("Error sending to server")
             log.exception(e)
