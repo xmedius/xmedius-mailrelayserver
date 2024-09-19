@@ -1,0 +1,19 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "xmediusmailrelayserver"
+description = "This module enables a Windows service (XMedius Mail Relay Server) that can forward emails to different SMTP servers according to destination patterns."
+readme = "README.md"
+dynamic = ["version"]
+license = {text = "MIT License"}
+dependencies = [
+  "pyyaml",
+  "aiosmtpd"
+]
+requires-python = ">=3.8"
+
+[tool.hatch.version]
+path = "xmediusmailrelayserver/__about__.py"
+

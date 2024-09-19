@@ -19,7 +19,7 @@ a multifunction printer (MFP) in order to send them as faxes through XMediusFAX
 
 ## Prerequisites
 
-- Python version 3.6 (minimum)
+- Python version 3.8 (minimum)
 - [pywin32](https://sourceforge.net/projects/pywin32/files/pywin32/) for
   installed Python version
 - Pip updated to its latest version:
@@ -29,10 +29,11 @@ a multifunction printer (MFP) in order to send them as faxes through XMediusFAX
 
 ## Install Package
 
-Run the following command as an administrator:
+Run the following commands as an administrator:
 
 ```
 pip install -v https://github.com/xmedius/xmedius-mailrelayserver/tarball/master
+python $PYTHON_HOME\Lib\site-packages\xmediusmailrelayserver\create_service.py
 ```
 
 # Quick Start (Example: Faxing from MFP)
